@@ -4,15 +4,30 @@ let path = require('path')
 let cookieParser = require('cookie-parser')
 let logger = require('morgan')
 let sassMiddleware = require('node-sass-middleware')
+let hbs = require("hbs")
+let expressHbs = require("express-handlebars")
 
 let indexRouter = require('./routes/index')
 let usersRouter = require('./routes/users')
 
 let app = express()
 
+
 // view engine setup
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'hbs')
+
+app.engine("hbs", expressHbs(
+    {
+      layoutsDir: "views",
+      defaultLayout: "layout",
+      extname: "hbs"
+    }
+))
+app.set("view engine", "hbs")
+hbs.registerPartials(__dirname + "/views/partials")
+
+
+// app.set('views', path.join(__dirname, 'views'))
+// app.set('view engine', 'hbs')
 
 app.use(logger('dev'))
 app.use(express.json())
@@ -35,7 +50,7 @@ app.use(function(req, res, next) {
 })
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
