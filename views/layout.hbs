@@ -3,12 +3,22 @@
   <head>
     <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+
   </head>
   <body>
-    {{> header}}
+      <div class="wrapper">
 
-    {{{body}}}
+          {{> header}}
 
-    {{> footer}}
+          <div class="body">
+              {{{body}}}
+          </div>
+
+<!--          <div class="footer">-->
+<!--              {{> footer}}-->
+<!--          </div>-->
+      </div>
   </body>
 </html>

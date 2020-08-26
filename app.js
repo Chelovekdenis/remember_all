@@ -1,16 +1,17 @@
-let createError = require('http-errors')
-let express = require('express')
-let path = require('path')
-let cookieParser = require('cookie-parser')
-let logger = require('morgan')
-let sassMiddleware = require('node-sass-middleware')
-let hbs = require("hbs")
-let expressHbs = require("express-handlebars")
+const createError = require('http-errors')
+const express = require('express')
+const path = require('path')
+const cookieParser = require('cookie-parser')
+const logger = require('morgan')
+const sassMiddleware = require('node-sass-middleware')
+const hbs = require("hbs")
+const expressHbs = require("express-handlebars")
 
-let indexRouter = require('./routes/index')
-let usersRouter = require('./routes/users')
+const indexRouter = require('./routes/index')
+const usersRouter = require('./routes/users')
+const chatRouter = require('./routes/chat')
 
-let app = express()
+const app = express()
 
 
 // view engine setup
@@ -29,7 +30,8 @@ hbs.registerPartials(__dirname + "/views/partials")
 // app.set('views', path.join(__dirname, 'views'))
 // app.set('view engine', 'hbs')
 
-app.use(logger('dev'))
+// Логи пишет, GET, POST все вот это
+// app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
@@ -43,6 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
+app.use('/chat', chatRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
